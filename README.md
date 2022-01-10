@@ -1,4 +1,4 @@
-#Holiday Manager
+# Holiday Manager
 This is a calendar-type project to track holidays for the years 2020-2024.
 
 Movitation - Created as an assessment for the Object Oriented Data Modeling 

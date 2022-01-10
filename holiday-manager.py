@@ -170,19 +170,23 @@ class HolidayList:
                 week_input = True
                 while week_input:
                     input_week = input("Which week? #[1-52, leave blank for current week]: ")
+                    
+                    if input_week == '':
+                        week_input = False
+                        break
 
-                    if input_week not in weeks and input_week != "":
+                    if int(input_week) not in weeks:
                         print("Error: invalid week input. Please select a week within the range 1-52, or leave blank.")
                     
                     else:
                         week_input = False
                         break
         
-        if input_week in weeks:
-            self.filter_holidays_by_week(input_year, input_week)
-
-        elif input_week == "":
+        if input_week == "":
             self.viewCurrentWeek()
+        
+        elif int(input_week) in weeks:
+            self.filter_holidays_by_week(input_year, input_week)
 
     def getWeather(self, year, week):
 
