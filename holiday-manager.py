@@ -1,9 +1,8 @@
-from datetime import datetime
+from datetime import date, datetime
 import json
 from bs4 import BeautifulSoup
 import requests
 from dataclasses import dataclass
-import calendar
 
 @dataclass
 class Holiday:
@@ -50,10 +49,6 @@ class HolidayList:
 
                 else:
                     print("\nThat holiday name and date combination is already in the system, try another holiday or leave name blank to return to main menu.\n")
-
-    #def findHoliday(self):
-        # Find Holiday in innerHolidays
-        # Return Holiday
 
     def removeHoliday(self):
         
@@ -130,8 +125,54 @@ class HolidayList:
     def numHolidays(self):
 
         return len(self.innerHolidays)
+
+    #def findHoliday(self):
+        # Find Holiday in innerHolidays
+        # Return Holiday
     
-    #def filter_holidays_by_week(self, year, week_number):
+    def filter_holidays_by_week(self):
+
+        print("View Holidays\n==============")
+
+
+        years = [2020, 2021, 2022, 2023, 2024]
+        weeks = [num for num in range(1,53)]
+
+        year_input = True
+        while year_input:
+
+            if week_input == False:
+                break
+            
+            input_year = input("Which year?: ")
+
+            if input_year not in years:
+                print("Error: invalid year input. Please select a year within the range 2020-2024.")
+            
+            else:
+                year_input = True
+                week_input = True
+                while week_input:
+                    input_week = int(input("Which week? #[1-52, leave blank for current week]: "))
+
+                    if input_week not in weeks:
+                        print("Error: invalid week input. Please select a week within the range 1-52, or leave blank.")
+                    
+                    else:
+                        week_input = False
+                        break
+                
+        if week_input == "":
+            input_weather = input("Would you like to see this week's weater? [y/n]: ")
+            
+            if input_weather == 'y':
+                HolidayList.getWeather()
+            
+            #elif input_weather == 'n':
+                #show just holidays
+
+            else:
+                print("Error: invalid input. Please input y or n.")
 
         # Use a Lambda function to filter by week number and save this as holidays, use the filter on innerHolidays
         # Week number is part of the the Datetime object
@@ -143,7 +184,10 @@ class HolidayList:
         # Output formated holidays in the week. 
         # * Remember to use the holiday __str__ method.
 
-    # def getWeather(weekNum):
+    def getWeather(self):
+
+        current_date = date.today()
+
         # Convert weekNum to range between two days
         # Use Try / Except to catch problems
         # Query API for weather in that week range
@@ -193,7 +237,9 @@ def main():
             elif save_input == 'n':
                 print("Save canceled.\n")
 
-        #elif menu_choice == '4':
+        elif menu_choice == '4':
+            holiday_list.filter_holidays_by_week()
+            print("Capability currently unavailable. Try again later!")
         
         elif menu_choice == '5':
             print("Exit\n=====")
@@ -209,22 +255,19 @@ def main():
         else:
             print("That is not a valid option, please try a number 1-5.")
 
-
-        
-    # Large Pseudo Code steps
-    # -------------------------------------
-    # 1. Initialize HolidayList Object
-    # 2. Load JSON file via HolidayList read_json function
-    # 3. Scrape additional holidays using your HolidayList scrapeHolidays function.
-    # 3. Create while loop for user to keep adding or working with the Calender
-    # 4. Display User Menu (Print the menu)
-    # 5. Take user input for their action based on Menu and check the user input for errors
-    # 6. Run appropriate method from the HolidayList object depending on what the user input is
-    # 7. Ask the User if they would like to Continue, if not, end the while loop, ending the program.  If they do wish to continue, keep the program going. 
-
 if __name__ == "__main__":
     main()
 
+# Large Pseudo Code steps
+# -------------------------------------
+# 1. Initialize HolidayList Object
+# 2. Load JSON file via HolidayList read_json function
+# 3. Scrape additional holidays using your HolidayList scrapeHolidays function.
+# 3. Create while loop for user to keep adding or working with the Calender
+# 4. Display User Menu (Print the menu)
+# 5. Take user input for their action based on Menu and check the user input for errors
+# 6. Run appropriate method from the HolidayList object depending on what the user input is
+# 7. Ask the User if they would like to Continue, if not, end the while loop, ending the program.  If they do wish to continue, keep the program going. 
 
 # Additional Hints:
 # ---------------------------------------------
